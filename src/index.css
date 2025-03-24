@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  .dark {
+    color-scheme: dark;
+  }
+
+  /* Improve touch interactions */
+  @media (hover: none) and (pointer: coarse) {
+    button, a {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+
+  /* Prevent iOS double-tap zoom */
+  @media (hover: none) and (pointer: coarse) {
+    a, button {
+      touch-action: manipulation;
+    }
+  }
+
+  /* Prevent iOS text size adjustment */
+  body {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Improve scrolling on iOS */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@layer utilities {
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 15s ease infinite;
+  }
+
+  .animate-slideDown {
+    animation: slideDown 0.3s ease-out forwards;
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+
+  .animate-scaleIn {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+
+  /* Safe area insets for modern iOS devices */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Improved backdrop blur for better performance */
+  .backdrop-blur-optimized {
+    @supports (backdrop-filter: blur(12px)) {
+      backdrop-filter: blur(12px);
+    }
+    @supports (-webkit-backdrop-filter: blur(12px)) {
+      -webkit-backdrop-filter: blur(12px);
+    }
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+
+  /* Better touch feedback */
+  .active-state {
+    @media (hover: none) {
+      transition: transform 0.1s ease;
+    }
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+
+  /* Dark mode transitions */
+  .transition-theme {
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Prevent content shift on modal open */
+@supports (overflow: clip) {
+  body:has(dialog[open]) {
+    overflow: clip;
+  }
+}
+
+/* Fallback for browsers that don't support :has */
+@supports not (overflow: clip) {
+  body:has(dialog[open]) {
+    overflow: hidden;
+  }
+}
+
+/* Improve scrollbar appearance */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+}
